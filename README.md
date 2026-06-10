@@ -1,6 +1,6 @@
-viết cho t 1 readme đơn giản cho project matrix multiplier đi# 4x4 Matrix Multiplier RTL
+# 4x4 Matrix Multiplier RTL
 
-A Verilog RTL implementation of a 4x4 matrix multiplier supporting signed-magnitude representation.
+A very basic Verilog RTL implementation of a 4x4 matrix multiplier supporting signed-magnitude representation.
 
 ## Features
 - **Matrix Dimensions:** 4x4
