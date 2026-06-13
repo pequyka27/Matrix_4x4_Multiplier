@@ -1,8 +1,9 @@
-`timescale 1ns/10ps
+`timescale 1ns/100ps
 
 module Matrix_Multiplier_tb;
     reg[7:0] din;
     reg wrt_en, rst, clk;
+    wire done;
     wire[16:0] dout;
 
     reg signed[7:0] matIn[31:0];
@@ -13,6 +14,7 @@ module Matrix_Multiplier_tb;
                     .wrt_en(wrt_en),
                     .rst(rst),
                     .clk(clk),
+                    .done(done),
                     .dout(dout));
 
     initial begin
@@ -27,15 +29,14 @@ module Matrix_Multiplier_tb;
 
     initial begin
         if (!$value$plusargs("INPUT=%s", input_file))
-            input_file = "min.hex";
-
-        $display("INFO: loading %0s", input_file);
-        $readmemh(input_file, matIn);
+            input_file= "input/basic_positive.hex";
+        $display("Loaded %0s", input_file);
+        $readmemh(input_file, matIn, 0, 31);
     end
 
     initial begin
         #1000;
-        $display("INFO: timeout reached, finishing simulation.");
+        $display("Timeout reached!");
         $finish;
     end
 
@@ -117,11 +118,10 @@ module Matrix_Multiplier_tb;
 
         calc_expect();
 
-        wait(instance_1.state==2'b11);
-        $display("Start OUT at %0t",$time);
+        wait(done);
         check_dout();
 
-        $display("INFO: simulation complete.");
+        $display("Simulation complete.");
         $finish;
     end
 

@@ -1,7 +1,7 @@
 `timescale 1ns/10ps
 
 module Matrix_Multiplier (
-    input[7:0] din, input wrt_en, input rst, input clk, output reg[16:0]  dout
+    input[7:0] din, input wrt_en, input rst, input clk, output reg[16:0]  dout, output done
 );
     
     localparam IDLE=0, LOAD=1, CALC=2, OUT=3;
@@ -91,6 +91,7 @@ module Matrix_Multiplier (
 
 
     assign sign_din= (din[7])? -$signed({1'b0,din[6:0]}) : $signed({1'b0,din[6:0]});
+    assign done= (state==OUT);
 
 
 endmodule
